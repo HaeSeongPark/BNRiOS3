@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "Model/BNRItem.h"
+#import "DatePickerViewController.h"
 
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *valueTextField;
@@ -60,4 +61,10 @@
 -(void)doneButtonAction {
     [self.valueTextField resignFirstResponder];
 }
+- (IBAction)changeDateButtonAction:(UIButton *)sender {
+    DatePickerViewController *datePickerVC = [DatePickerViewController new];
+    datePickerVC.item = self.item;
+    [[self navigationController] pushViewController:datePickerVC animated:YES];
+}
+
 @end
