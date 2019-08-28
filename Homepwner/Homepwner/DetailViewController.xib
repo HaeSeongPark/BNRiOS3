@@ -16,6 +16,7 @@
                 <outlet property="nameField" destination="0qR-4f-kVI" id="IXD-HA-SIj"/>
                 <outlet property="serialNumberField" destination="fEX-1H-Kzm" id="Nxf-Wg-dGa"/>
                 <outlet property="valueField" destination="cpG-bu-8Un" id="hfV-Q7-6M0"/>
+                <outlet property="valueTextField" destination="cpG-bu-8Un" id="zA4-L8-W0s"/>
                 <outlet property="view" destination="vYS-OF-F8U" id="aLS-oj-hAw"/>
             </connections>
         </placeholder>

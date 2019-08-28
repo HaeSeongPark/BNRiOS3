@@ -10,6 +10,7 @@
 #import "Model/BNRItem.h"
 
 @interface DetailViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *valueTextField;
 
 @end
 
@@ -44,29 +45,19 @@
 }
 //https://stackoverflow.com/questions/38133853/how-to-add-a-return-key-on-a-decimal-pad-in-swift
 -(void) addDoneButtonOnKeyboard {
-//    UIToolbar *doneToolbar = [UIToolbar initWith]
+    UIToolbar *doneToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    doneToolbar.barStyle = UIBarStyleDefault;
+    
+    UIBarButtonItem *flexSapce = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonAction)];
+    
+    NSArray *items = [NSArray arrayWithObjects:flexSapce,done, nil];
+    doneToolbar.items = items;
+    [doneToolbar sizeToFit];
+    self.valueTextField.inputAccessoryView = doneToolbar;
 }
-//func addDoneButtonOnKeyboard()
-//{
-//    let doneToolbar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 50))
-//    doneToolbar.barStyle = UIBarStyle.Default
-//
-//    let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-//    let done: UIBarButtonItem = UIBarButtonItem(title: "Aceptar", style: UIBarButtonItemStyle.Done, target: self, action: Selector("doneButtonAction"))
-//
-//    var items = [UIBarButtonItem]()
-//    items.append(flexSpace)
-//    items.append(done)
-//
-//    doneToolbar.items = items
-//    doneToolbar.sizeToFit()
-//
-//    self.txtNumber.inputAccessoryView = doneToolbar
-//
-//}
-//
-//func doneButtonAction()
-//{
-//    self.txtNumber.resignFirstResponder()
-//}
+
+-(void)doneButtonAction {
+    [self.valueTextField resignFirstResponder];
+}
 @end

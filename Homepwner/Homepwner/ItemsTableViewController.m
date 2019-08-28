@@ -59,6 +59,9 @@
     NSLog(@"%lu",(unsigned long)[[ItemStore sharedStore] allItems].count);
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.tableView.estimatedRowHeight = 70;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -115,6 +118,7 @@
         return cell;
     }
     cell.textLabel.font = [UIFont systemFontOfSize:20];
+    cell.textLabel.numberOfLines = 0;
     cell.textLabel.text = [p description];
     
     return cell;
