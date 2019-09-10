@@ -89,10 +89,11 @@
     
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        [imagePicker setAllowsEditing:YES];
     } else {
         [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }
-    
+    imagePicker.allowsEditing = YES;
     [imagePicker setDelegate:self];
     
     // Place image picker on the screen
@@ -110,7 +111,8 @@
     }
     
     //Get picked image from info dictionary
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    
     
     // Create a CFUUID object  it knows how to create unique identifier strings
     CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);
@@ -135,6 +137,15 @@
     //Take iamge picker off the screen
     //you must call this dismiss method
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)backgoundTapped:(id)sender {
+    [[self view] endEditing:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 

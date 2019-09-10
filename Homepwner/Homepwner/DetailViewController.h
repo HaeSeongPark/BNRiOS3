@@ -10,7 +10,7 @@
 @class BNRItem;
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DetailViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface DetailViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate>
 {
     __weak IBOutlet UITextField *nameField;
     __weak IBOutlet UITextField *serialNumberField;
