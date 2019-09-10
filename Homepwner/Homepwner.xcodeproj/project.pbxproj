@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		97104C0D231F2A040036BA95 /* BNRImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 97104C0C231F2A040036BA95 /* BNRImageStore.m */; };
 		9789AEC3230F61CA004F43F3 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9789AEC2230F61CA004F43F3 /* HeaderView.xib */; };
 		9789AEC723135B56004F43F3 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9789AEC523135B56004F43F3 /* DetailViewController.m */; };
 		9789AEC823135B56004F43F3 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9789AEC623135B56004F43F3 /* DetailViewController.xib */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		97104C0B231F2A040036BA95 /* BNRImageStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNRImageStore.h; sourceTree = "<group>"; };
+		97104C0C231F2A040036BA95 /* BNRImageStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNRImageStore.m; sourceTree = "<group>"; };
 		9789AEC2230F61CA004F43F3 /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		9789AEC423135B56004F43F3 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		9789AEC523135B56004F43F3 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
@@ -101,6 +104,8 @@
 				978C0F90230409EE00FFF631 /* BNRItem.m */,
 				978C0F9323040BA000FFF631 /* ItemStore.h */,
 				978C0F9423040BA000FFF631 /* ItemStore.m */,
+				97104C0B231F2A040036BA95 /* BNRImageStore.h */,
+				97104C0C231F2A040036BA95 /* BNRImageStore.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 				9789AECC231609EE004F43F3 /* DatePickerViewController.m in Sources */,
 				978C0F92230409EE00FFF631 /* BNRItem.m in Sources */,
 				978C0F862304057100FFF631 /* main.m in Sources */,
+				97104C0D231F2A040036BA95 /* BNRImageStore.m in Sources */,
 				978C0F782304057000FFF631 /* AppDelegate.m in Sources */,
 				978C0F9523040BA000FFF631 /* ItemStore.m in Sources */,
 				9789AEC723135B56004F43F3 /* DetailViewController.m in Sources */,

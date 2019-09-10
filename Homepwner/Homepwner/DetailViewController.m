@@ -9,6 +9,7 @@
 #import "DetailViewController.h"
 #import "Model/BNRItem.h"
 #import "DatePickerViewController.h"
+#import "Model/BNRImageStore.h"
 
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *valueTextField;
@@ -38,6 +39,19 @@
     [dateLabel setText:[dateFormatter stringFromDate:[_item dateCreated]]];
     
     [self addDoneButtonOnKeyboard];
+    
+    NSString *imageKey = [_item imageKey];
+    
+    if(imageKey) {
+        //Get image for image key from image store
+        UIImage *imageToDisplay = [[BNRImageStore sharedStore] imageForKey:imageKey];
+        
+        // Use that image to put on the screen in imageView
+        [_imageView setImage:imageToDisplay];
+    } else {
+        // Clear the imageView
+        [_imageView setImage:nil];
+    }
 }
 
 - (void)setItem:(BNRItem *)i {
@@ -87,8 +101,33 @@
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info {
+    
+    NSString *oldKey = [_item imageKey];
+    //Did the item already have an image?
+    if(oldKey) {
+        // Delete the old image
+        [[BNRImageStore sharedStore] deleteImageForKey:oldKey];
+    }
+    
     //Get picked image from info dictionary
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    // Create a CFUUID object  it knows how to create unique identifier strings
+    CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);
+    
+    //Create a string from unique identifier
+    CFStringRef newUniqueIDString = CFUUIDCreateString(kCFAllocatorDefault, newUniqueId);
+    
+    // Use taht unique ID to set our item's imageKey
+    NSString *key = (__bridge NSString*)newUniqueIDString;
+    [_item setImageKey:key];
+    
+    //Store image in the BNRImageStore with this key
+    [[BNRImageStore sharedStore] setImage:image forkey:[_item imageKey]];
+    
+    CFRelease(newUniqueIDString);
+    CFRelease(newUniqueId);
+    
     
     //Put that iimage onto the screen in our image view
     [_imageView setImage:image];
