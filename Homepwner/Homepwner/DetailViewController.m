@@ -93,7 +93,6 @@
     } else {
         [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }
-    imagePicker.allowsEditing = YES;
     [imagePicker setDelegate:self];
     
     // Place image picker on the screen
