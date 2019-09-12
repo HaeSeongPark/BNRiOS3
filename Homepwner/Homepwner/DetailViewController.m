@@ -13,6 +13,7 @@
 
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *valueTextField;
+@property (weak, nonatomic) IBOutlet UIButton *removeImageButton;
 
 @end
 
@@ -48,9 +49,11 @@
         
         // Use that image to put on the screen in imageView
         [_imageView setImage:imageToDisplay];
+        [_removeImageButton setHidden:NO];
     } else {
         // Clear the imageView
         [_imageView setImage:nil];
+        [_removeImageButton setHidden:YES];
     }
 }
 
@@ -132,6 +135,7 @@
     
     //Put that iimage onto the screen in our image view
     [_imageView setImage:image];
+    [_removeImageButton setHidden:NO];
     
     //Take iamge picker off the screen
     //you must call this dismiss method
@@ -147,5 +151,16 @@
     return YES;
 }
 
+- (IBAction)removeImage:(UIButton *)sender {
+    NSString *imageKey = [_item imageKey];
+    if(imageKey) {
+        [[BNRImageStore sharedStore]deleteImageForKey:imageKey];
+        [_item setImageKey:nil];
+        [_imageView setImage:nil];
+        [_removeImageButton setHidden:YES];
+    } else {
+        NSLog(@"no image to remove");
+    }
+}
 
 @end

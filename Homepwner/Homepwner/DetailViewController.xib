@@ -15,6 +15,7 @@
                 <outlet property="dateLabel" destination="UD2-Q0-B7V" id="bYj-kR-MvV"/>
                 <outlet property="imageView" destination="KAq-hO-BPZ" id="q1w-KQ-ZJ4"/>
                 <outlet property="nameField" destination="0qR-4f-kVI" id="IXD-HA-SIj"/>
+                <outlet property="removeImageButton" destination="Sys-7B-q1t" id="8YZ-14-T4S"/>
                 <outlet property="serialNumberField" destination="fEX-1H-Kzm" id="Nxf-Wg-dGa"/>
                 <outlet property="valueField" destination="cpG-bu-8Un" id="hfV-Q7-6M0"/>
                 <outlet property="valueTextField" destination="cpG-bu-8Un" id="zA4-L8-W0s"/>
@@ -97,6 +98,14 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sys-7B-q1t">
+                    <rect key="frame" x="304" y="378" width="51" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="remove"/>
+                    <connections>
+                        <action selector="removeImage:" destination="-1" eventType="touchUpInside" id="7IH-o9-yl9"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
