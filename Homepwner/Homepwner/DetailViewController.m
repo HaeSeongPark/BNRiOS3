@@ -10,6 +10,7 @@
 #import "Model/BNRItem.h"
 #import "DatePickerViewController.h"
 #import "Model/BNRImageStore.h"
+#import "CameraOverlayView.h"
 
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *valueTextField;
@@ -97,6 +98,25 @@
         [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }
     [imagePicker setDelegate:self];
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
+    {
+        // 1. Determine the frame within which the crosshair will be drawn
+        CGRect screenRect = [[[self view] window] bounds];
+        CGPoint centre;
+        centre.x = screenRect.origin.x + screenRect.size.width / 2.0;
+        centre.y = screenRect.origin.y + screenRect.size.height / 2.0;
+        CGSize size;
+        size.width = screenRect.size.width * 0.25;
+        size.height = screenRect.size.height * 0.2;
+        CGRect overlayRect = CGRectMake(centre.x - size.width/2, centre.y - size.height/2, size.width, size.height);
+        
+        // 2. Create the overlay's UIView within that frame
+        UIView *overlayView = [[CameraOverlayView alloc] initWithFrame:overlayRect];
+        
+        // 3. Tell the image picker to show an overlay view
+        [imagePicker setCameraOverlayView:overlayView];
+    }
     
     // Place image picker on the screen
     [self presentViewController:imagePicker animated:YES completion:nil];
