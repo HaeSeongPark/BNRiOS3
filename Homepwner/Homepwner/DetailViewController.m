@@ -11,6 +11,7 @@
 #import "DatePickerViewController.h"
 #import "Model/BNRImageStore.h"
 #import "CameraOverlayView.h"
+#import "Model/ItemStore.h"
 
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *valueTextField;
@@ -19,6 +20,41 @@
 @end
 
 @implementation DetailViewController
+
+- (instancetype)initForNewItem:(BOOL)isNew {
+    self = [super initWithNibName:@"DetailViewController" bundle:nil];
+    if(self) {
+        if(isNew){
+            UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                      target:self
+                                                                                      action:@selector(save:)];
+            [[self navigationItem] setRightBarButtonItem:doneItem];
+            
+            UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                        target:self
+                                                                                        action:@selector(cancel:)];
+            [[self navigationItem] setLeftBarButtonItem:cancelItem];
+        }
+    }
+    return self;
+}
+
+-(void)save:(id)sender{
+    [[self presentingViewController] dismissViewControllerAnimated:YES completion:_dismissBlock];
+}
+
+-(void)cancel:(id)sender {
+    // If the user cancelled, then remove the BNRItem from the store
+    [[ItemStore sharedStore] removeItem:_item];
+    [[self presentingViewController] dismissViewControllerAnimated:YES completion:_dismissBlock];
+}
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    @throw [NSException exceptionWithName:@"Wrong initializer"
+                                   reason:@"Use initForNewItem:"
+                                 userInfo:nil];
+    return nil;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -117,9 +153,17 @@
         // 3. Tell the image picker to show an overlay view
         [imagePicker setCameraOverlayView:overlayView];
     }
-    
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        CGRect rect = CGRectMake(100, 100, self.view.frame.size.width, self.view.frame.size.height);
+        imagePicker.modalPresentationStyle = UIModalPresentationPopover;
+        imagePicker.popoverPresentationController.sourceView = self.view;
+        imagePicker.popoverPresentationController.sourceRect = rect;
+        
+        //        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
     // Place image picker on the screen
     [self presentViewController:imagePicker animated:YES completion:nil];
+    
     
 }
 
@@ -134,7 +178,9 @@
     
     //Get picked image from info dictionary
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-    
+    if(!image) {
+        image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    }
     
     // Create a CFUUID object  it knows how to create unique identifier strings
     CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);

@@ -10,7 +10,7 @@
 @class BNRItem;
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DetailViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate>
+@interface DetailViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UIPopoverControllerDelegate>
 {
     __weak IBOutlet UITextField *nameField;
     __weak IBOutlet UITextField *serialNumberField;
@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 }
 @property (nonatomic, strong) BNRItem *item;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (nonatomic, copy) void (^dismissBlock)(void);
+-(instancetype)initForNewItem:(BOOL)isNew;
 
 @end
 

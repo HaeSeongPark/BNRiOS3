@@ -166,12 +166,30 @@
     
 //    [[[ItemStore sharedStore] itemsMoreThan] addObject:newItem];
     
-    int lastRow = (int)[[[ItemStore sharedStore] allItems] indexOfObject:newItem];
+//    int lastRow = (int)[[[ItemStore sharedStore] allItems] indexOfObject:newItem];
     
 //    int lastRow = (int)[[[ItemStore sharedStore] itemsMoreThan] indexOfObject:newItem];
     
-    NSIndexPath *ip = [NSIndexPath indexPathForRow:lastRow inSection:0];
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:ip] withRowAnimation:UITableViewRowAnimationTop];
+//    NSIndexPath *ip = [NSIndexPath indexPathForRow:lastRow inSection:0];
+//    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:ip] withRowAnimation:UITableViewRowAnimationTop];
+    DetailViewController *detailViewController = [[DetailViewController alloc] initForNewItem:YES];
+    [detailViewController setItem:newItem];
+    
+    [detailViewController setDismissBlock:^{
+        [self.tableView reloadData];
+    }];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    
+    [navController setModalPresentationStyle:UIModalPresentationFormSheet];
+    
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        [navController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    } else {
+        [navController setModalTransitionStyle:UIModalTransitionStylePartialCurl];
+    }
+    
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -187,7 +205,8 @@
     return @"Remove";
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    DetailViewController *detailViewControoler = [[DetailViewController alloc] init];
+//    DetailViewController *detailViewControoler = [[DetailViewController alloc] init];
+    DetailViewController *detailViewControoler = [[DetailViewController alloc] initForNewItem:NO];
     
     NSArray *items = [[ItemStore sharedStore] allItems];
     BNRItem *selectedItem = [items objectAtIndex:[indexPath row]];
@@ -198,6 +217,14 @@
     //Push it onto the top of the navigation controller's stack
     [[self navigationController] pushViewController:detailViewControoler animated:YES];
     
+}
+
+- (BOOL)shouldAutorotate {
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 @end
