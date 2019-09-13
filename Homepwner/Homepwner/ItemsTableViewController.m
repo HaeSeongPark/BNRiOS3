@@ -182,6 +182,9 @@
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
     
     [navController setModalPresentationStyle:UIModalPresentationFormSheet];
+//    it hides the "cancel", "done" buttons of detailVC
+//    [navController setModalPresentationStyle:UIModalPresentationCurrentContext];
+//    [self setDefinesPresentationContext:YES];
     
     if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [navController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
