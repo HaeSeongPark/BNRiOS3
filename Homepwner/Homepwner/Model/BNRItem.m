@@ -11,7 +11,7 @@
 @implementation BNRItem
 @synthesize container;
 @synthesize containedItem;
-@synthesize itemName, serialNumber, dateCreated, valueInDollars;
+@synthesize itemName, serialNumber, dateCreated, valueInDollars, imageKey;
 
 + (id)randomItem
 {
@@ -95,6 +95,32 @@
      dateCreated];
     return descriptionString;
 }
+
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:itemName forKey:@"itemName"];
+    [coder encodeObject:serialNumber forKey:@"serialNumber"];
+    [coder encodeObject:dateCreated forKey:@"dateCreated"];
+    [coder encodeObject:imageKey forKey:@"imageKey"];
+    [coder encodeInt:valueInDollars forKey:@"valueInDollars"];
+}
+
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder {
+    self = [super init];
+    if(self) {
+        [self setItemName:[aDecoder decodeObjectForKey:@"itemName"]];
+        [self setSerialNumber:[aDecoder decodeObjectForKey:@"serialNumber"]];
+        [self setImageKey:[aDecoder decodeObjectForKey:@"imageKey"]];
+        [self setValueInDollars:[aDecoder decodeIntForKey:@"valueInDollars"]];
+        dateCreated = [aDecoder decodeObjectForKey:@"dateCreated"];
+    }
+    return self;
+}
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 - (void)dealloc
 {
     NSLog(@"Destroyed: %@ ", self);

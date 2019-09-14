@@ -22,9 +22,29 @@
 {
     self = [super init];
     if (self) {
-        _allItems = [[NSMutableArray alloc] init];
         _itemsMoreThan = [[NSMutableArray alloc] init];
         _itemsRest = [[NSMutableArray alloc] init];
+//        _allItems = [[NSMutableArray alloc] init];
+        
+        NSString *path = [self itemArchivePath];
+        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+        
+        NSSet *classes = [NSSet setWithArray:@[
+                                           [NSMutableArray class],
+                                           [BNRItem class],
+                                           [NSDate class]]];
+        
+        NSError *error;
+        _allItems = [NSKeyedUnarchiver unarchivedObjectOfClasses:classes fromData:data error:&error];
+        
+        if(error) {
+            NSLog(@"unarchive error : %@", error);
+        }
+        
+        // If the array hadn't been saved previously, create a new empty one
+        if(!_allItems) {
+            _allItems = [NSMutableArray new];
+        }
     }
     return self;
 }
@@ -34,7 +54,8 @@
 }
 
 - (BNRItem *)createItem {
-    BNRItem *p = [BNRItem randomItem];
+//    BNRItem *p = [BNRItem randomItem];
+    BNRItem *p = [[BNRItem alloc] init];
     [_allItems addObject:p];
     return p;
 }
@@ -65,5 +86,28 @@
     // Insert p in array at new location
     [_allItems insertObject:p atIndex:to];
 }
+
+- (NSString *)itemArchivePath {
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                       NSUserDomainMask,
+                                                                       YES);
+    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+    return [documentDirectory stringByAppendingPathComponent:@"items.archive"];
+}
+
+- (BOOL)saveChanges {
+    // returns success or failure
+    NSString *path = [self itemArchivePath];
+    NSLog(@"%@",path);
+    NSError *error;
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_allItems requiringSecureCoding:YES error:&error];
+    
+    if(error) {
+        NSLog(@"error : %@", error);
+    }
+    
+    return [data writeToFile:path atomically:NO];
+}
+
 
 @end

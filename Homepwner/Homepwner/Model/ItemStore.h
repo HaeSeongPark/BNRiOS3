@@ -24,6 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)moveItemAtIndex:(int)from
                 toIndex:(int)to;
 
+
+- (NSString *)itemArchivePath;
+- (BOOL)saveChanges;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -229,4 +229,10 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [_item setSerialNumber:serialNumberField.text];
+    [_item setItemName:nameField.text];
+    [_item setValueInDollars:[valueField.text intValue]];
+}
+
 @end
