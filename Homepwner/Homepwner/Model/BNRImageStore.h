@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(UIImage *)imageForKey:(NSString *)s;
 -(void)deleteImageForKey:(NSString *)s;
 
+-(NSString *)imagePathForKey:(NSString *)key;
 @end
 
 NS_ASSUME_NONNULL_END
