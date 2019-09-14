@@ -22,8 +22,19 @@
     self = [super init];
     if (self) {
         dictionary = [[NSMutableDictionary alloc] init];
+        
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self
+               selector:@selector(clearCache:)
+                   name:UIApplicationDidReceiveMemoryWarningNotification
+                 object:nil];
     }
     return self;
+}
+
+-(void)clearCache:(NSNotification *)noti {
+    NSLog(@"flushing %lu images out of the cache", (unsigned long)[dictionary count]);
+    [dictionary removeAllObjects];
 }
 
 - (void)setImage:(UIImage *)i forkey:(NSString *)s {
@@ -32,7 +43,8 @@
     NSString *imagePath = [self imagePathForKey:s];
     
     // Trun image into JPEG data
-    NSData *d =UIImageJPEGRepresentation(i, 0.5);
+    NSData *d = UIImagePNGRepresentation(i);
+//    NSData *d = UIImageJPEGRepresentation(i, 0.5);
     
     // Write it to full path
     [d writeToFile:imagePath atomically:YES];
@@ -73,5 +85,6 @@
     NSString *documentDirectory = [documentDirectories objectAtIndex:0];
     return [documentDirectory stringByAppendingPathComponent:key];
 }
+
 
 @end
